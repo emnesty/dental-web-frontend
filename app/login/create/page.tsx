@@ -1,6 +1,9 @@
 "use client";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
@@ -15,8 +18,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [displayName, setDisplayName] = useState("");
+  const [user, setUser] = useState<User | null>(null);
 
   const supabase = createClientComponentClient();
 
@@ -58,27 +62,27 @@ export default function LoginPage() {
         description:
           "Conta criada com sucesso! Verifique seu e-mail para confirmar a conta.",
       });
+      // Atualiza o estado do usuário
       setUser(data.user);
-      router.refresh();
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
+
+      // Redirecionar para a página de login
+      router.push("/login");
     }
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.refresh();
-    setUser(null);
-  };
+  // const handleLogout = async () => {
+  //   await supabase.auth.signOut();
+  //   router.refresh();
+  //   setUser(null);
+  // };
 
   if (loading) {
     return <h1>loading..</h1>;
   }
 
   return (
-    <main className="flex items-center justify-center h-screen p-6">
-      <div className="max-w-sm mx-auto space-y-6">
+    <main className="flex items-center justify-center h-screen p-6 dark:bg-gray-900">
+      <div className="mx-auto w-[350px] space-y-6">
         <div className="flex justify-center">
           <img alt="Logo" src="../../../images/logo.png" />
         </div>
@@ -90,7 +94,9 @@ export default function LoginPage() {
         </div>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="dark:text-gray-400">
+              Email
+            </Label>
             <Input
               id="email"
               placeholder="Insira o seu email"
@@ -101,7 +107,9 @@ export default function LoginPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Senha</Label>
+            <Label htmlFor="password" className="dark:text-gray-400">
+              Senha
+            </Label>
             <Input
               id="password"
               placeholder="Entre com sua senha"
@@ -123,7 +131,11 @@ export default function LoginPage() {
             />
           </div>
         </div>
-        <Button className="w-full" type="submit" onClick={handleSignUp}>
+        <Button
+          className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+          type="submit"
+          onClick={handleSignUp}
+        >
           Criar uma conta
         </Button>
         <Link

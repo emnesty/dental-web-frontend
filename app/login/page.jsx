@@ -49,14 +49,26 @@ export default function LoginPage() {
   };
 
   const handleSignIn = async () => {
-    const res = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    setUser(res.data.user);
-    router.refresh();
-    setEmail("");
-    setPassword("");
+
+    if (error) {
+      toast({
+        title: "Erro",
+        description: "Falha no login. Verifique suas credenciais.",
+      });
+    } else {
+      toast({
+        title: "Sucesso",
+        description: "Login realizado com sucesso!",
+      });
+      setUser(data.user);
+      router.push("/");
+      setEmail("");
+      setPassword("");
+    }
   };
 
   const handleLogout = async () => {
@@ -76,6 +88,9 @@ export default function LoginPage() {
           <h1 className="mb-4 text-xl font-bold text-gray-700 dark:text-gray-300">
             Você já está logado
           </h1>
+          <h2 className="mb-4 text-sm text-gray-700 dark:text-gray-300">
+            Deseja efetuar o logout?
+          </h2>
           <button
             onClick={handleLogout}
             className="w-full p-3 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none"
@@ -89,7 +104,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex items-center justify-center h-screen p-6 dark:bg-gray-900">
-      <div className="max-w-sm mx-auto space-y-6">
+      <div className="mx-auto w-[350px] space-y-6">
         <div className="flex justify-center">
           <img alt="Company Logo" src="images/logo.png" />
         </div>
@@ -108,7 +123,7 @@ export default function LoginPage() {
             </Label>
             <Input
               id="email"
-              placeholder="Insira o seu email"
+              placeholder="Entre com o seu email"
               required
               type="email"
               value={email}
@@ -128,18 +143,22 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button className="w-full" type="submit" onClick={handleSignIn}>
+          <Button
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+            type="submit"
+            onClick={handleSignIn}
+          >
             Entrar
           </Button>
           <Button
-            className="w-full mt-4 text-white bg-green-500"
+            className="w-full mt-4 text-white bg-green-500 hover:bg-green-400"
             type="button"
             onClick={redirectToRecoverPage}
           >
-            Criar uma conta
+            Cadastre-se em nossa plataforma
           </Button>
           <Link
-            className="inline-block w-full text-sm text-center underline"
+            className="inline-block w-full text-sm text-center underline dark:text-gray-400"
             href={"login/recover"}
           >
             Esqueceu sua senha?

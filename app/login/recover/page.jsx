@@ -69,7 +69,10 @@ export default function RecoverPassword() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <Button className="w-full" type="submit">
+          <Button
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+            type="submit"
+          >
             Enviar
           </Button>
         </form>
