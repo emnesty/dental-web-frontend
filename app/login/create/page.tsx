@@ -34,7 +34,7 @@ export default function LoginPage() {
 
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 4000);
   }
 
   const supabase = createClientComponentClient();

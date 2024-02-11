@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { Icons } from "@/components/ui/icons";
 
 export default function LoginPage() {
   const { toast } = useToast();
@@ -18,6 +19,7 @@ export default function LoginPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const supabase = createClientComponentClient();
+  const [isLoading, setIsLoading] = useState(false); // Garantir que esta linha esteja definida corretamente
 
   const redirectToRecoverPage = () => {
     router.push("/login/create");
@@ -50,6 +52,7 @@ export default function LoginPage() {
   };
 
   const handleSignIn = async () => {
+    setIsLoading(true); // Inicia o carregamento
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -70,6 +73,7 @@ export default function LoginPage() {
       setEmail("");
       setPassword("");
     }
+    setIsLoading(false); // Finaliza o carregamento
   };
 
   const handleLogout = async () => {
@@ -163,10 +167,15 @@ export default function LoginPage() {
             </div>
             <Button
               className="w-full bg-slate-900 hover:bg-slate-800 text-white"
-              type="submit"
+              type="button"
               onClick={handleSignIn}
+              disabled={isLoading} // Desabilita o botão enquanto estiver carregando
             >
-              Entrar
+              {isLoading ? (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Entrar"
+              )}
             </Button>
             <Button
               className="w-full mt-4 text-white bg-green-500 hover:bg-green-400"
