@@ -20,6 +20,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { Table } from "./ui/table";
 import { TableSection } from "./table";
+import React from "react";
 
 const navigation = [
   { name: "Consultas", href: "#", icon: HomeIcon, current: true },

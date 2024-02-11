@@ -9,8 +9,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export default function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -81,70 +83,110 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex items-center justify-center h-screen p-6 dark:bg-gray-900">
-      <div className="mx-auto w-[350px] space-y-6">
-        <div className="flex justify-center">
-          <img alt="Logo" src="../../../images/logo.png" />
-        </div>
-        <div className="space-y-2 text-center">
-          <h1 className="text-2xl font-bold">Realizar cadastro</h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            Entre com seu email e senha abaixo
-          </p>
-        </div>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email" className="dark:text-gray-400">
-              Email
-            </Label>
-            <Input
-              id="email"
-              placeholder="Insira o seu email"
-              required
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password" className="dark:text-gray-400">
-              Senha
-            </Label>
-            <Input
-              id="password"
-              placeholder="Entre com sua senha"
-              required
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Confirmar senha</Label>
-            <Input
-              id="password"
-              placeholder="Confirme sua senha"
-              required
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-        </div>
-        <Button
-          className="w-full bg-slate-900 hover:bg-slate-800 text-white"
-          type="submit"
-          onClick={handleSignUp}
-        >
-          Criar uma conta
-        </Button>
+    <>
+      <div className="h-screen container relative hidden flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
-          className="inline-block w-full text-sm text-center underline"
           href={"/login"}
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "absolute right-4 top-4 md:right-8 md:top-8"
+          )}
         >
-          Voltar para o login
+          Entrar
         </Link>
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
+          {/* <div className="absolute inset-0 bg-zinc-900" /> */}
+          <div className="max-w-full overflow-hidden">
+            <Image
+              src={"/images/jonathan-borba-hl6uG9cHW5A-unsplash.jpg"}
+              alt={""}
+              layout="fill" // Usa o layout fill para que a imagem preencha o contêiner
+              objectFit="cover" // Garante que a imagem cubra todo o espaço disponível
+              objectPosition="center" // Ajusta o posicionamento da imagem, se necessário
+              className="absolute inset-0" // Mantém a classe existente para posicionamento absoluto
+            />
+          </div>
+          <div className="relative z-20 flex items-center text-lg font-medium">
+            <img alt="Logo" src="../../../images/logo.png" />
+            {/* DentApp */}
+          </div>
+        </div>
+        <div className="lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                Crie sua conta
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Entre com seus dados abaixo para criar sua conta
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="dark:text-gray-400">
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  placeholder="Insira o seu email"
+                  required
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="dark:text-gray-400">
+                Senha
+              </Label>
+              <Input
+                id="password"
+                placeholder="Entre com sua senha"
+                required
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Confirmar senha</Label>
+              <Input
+                id="password"
+                placeholder="Confirme sua senha"
+                required
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+            <Button
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+              type="submit"
+              onClick={handleSignUp}
+            >
+              Criar uma conta
+            </Button>
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              Clicando em criar conta você concorda com nossos{" "}
+              <Link
+                href="/terms"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Termos de serviço
+              </Link>{" "}
+              e{" "}
+              <Link
+                href="/privacy"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Política de privacidade
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
       </div>
-    </main>
+    </>
   );
 }

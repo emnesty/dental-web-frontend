@@ -1,3 +1,4 @@
+import React from "react";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table";
 
