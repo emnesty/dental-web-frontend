@@ -13,6 +13,10 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import React from "react";
+import { Icons } from "@/components/ui/icons";
+
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,8 +25,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [displayName, setDisplayName] = useState("");
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  async function onSubmit(event: React.SyntheticEvent) {
+    event.preventDefault();
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }
 
   const supabase = createClientComponentClient();
 
@@ -39,11 +52,13 @@ export default function LoginPage() {
   }, []);
 
   const handleSignUp = async () => {
+    setIsLoading(true);
     if (password !== confirmPassword) {
       toast({
         title: "Erro",
         description: "As senhas não coincidem.",
       });
+      setIsLoading(false);
       return;
     }
     const { data, error } = await supabase.auth.signUp({
@@ -58,6 +73,7 @@ export default function LoginPage() {
         title: "Erro",
         description: error.message,
       });
+      setIsLoading(false);
     } else {
       toast({
         title: "Sucesso",
@@ -70,13 +86,8 @@ export default function LoginPage() {
       // Redirecionar para a página de login
       router.push("/login");
     }
+    setIsLoading(false);
   };
-
-  // const handleLogout = async () => {
-  //   await supabase.auth.signOut();
-  //   router.refresh();
-  //   setUser(null);
-  // };
 
   if (loading) {
     return <h1>loading..</h1>;
@@ -132,6 +143,10 @@ export default function LoginPage() {
                   required
                   type="email"
                   value={email}
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  autoCorrect="off"
+                  disabled={isLoading}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -146,6 +161,7 @@ export default function LoginPage() {
                 required
                 type="password"
                 value={password}
+                disabled={isLoading}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
@@ -158,15 +174,19 @@ export default function LoginPage() {
                 placeholder="Confirme sua senha"
                 required
                 type="password"
+                disabled={isLoading}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
             <Button
               className="w-full bg-slate-900 hover:bg-slate-800 text-white"
-              type="submit"
+              type="button"
               onClick={handleSignUp}
             >
+              {isLoading && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Criar uma conta
             </Button>
             <p className="px-8 text-center text-sm text-muted-foreground">
