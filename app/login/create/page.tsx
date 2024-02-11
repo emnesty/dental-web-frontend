@@ -100,10 +100,10 @@ export default function LoginPage() {
             <Image
               src={"/images/jonathan-borba-hl6uG9cHW5A-unsplash.jpg"}
               alt={""}
-              layout="fill" // Usa o layout fill para que a imagem preencha o contêiner
-              objectFit="cover" // Garante que a imagem cubra todo o espaço disponível
-              objectPosition="center" // Ajusta o posicionamento da imagem, se necessário
-              className="absolute inset-0" // Mantém a classe existente para posicionamento absoluto
+              layout="fill" //
+              objectFit="cover"
+              objectPosition="center"
+              className="absolute inset-0"
             />
           </div>
           <div className="relative z-20 flex items-center text-lg font-medium">
@@ -150,7 +150,9 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Confirmar senha</Label>
+              <Label htmlFor="password" className="dark:text-gray-400">
+                Confirmar senha
+              </Label>
               <Input
                 id="password"
                 placeholder="Confirme sua senha"

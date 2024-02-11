@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
   const { toast } = useToast();
@@ -103,68 +104,86 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex items-center justify-center h-screen p-6 dark:bg-gray-900">
-      <div className="mx-auto w-[350px] space-y-6">
-        <div className="flex justify-center">
-          <img alt="Company Logo" src="images/logo.png" />
-        </div>
-        <div className="space-y-2 text-center">
-          <h1 className="text-2xl font-bold dark:text-gray-400">
-            Acessar Sistema
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            Entre com seu email e senha abaixo
-          </p>
-        </div>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email" className="dark:text-gray-400">
-              Email
-            </Label>
-            <Input
-              id="email"
-              placeholder="Entre com o seu email"
-              required
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+    <>
+      <div className="h-screen container relative hidden flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
+          {/* <div className="absolute inset-0 bg-zinc-900" /> */}
+          <div className="max-w-full overflow-hidden">
+            <Image
+              src={"/images/jonathan-borba-hl6uG9cHW5A-unsplash.jpg"}
+              alt={""}
+              layout="fill" //
+              objectFit="cover"
+              objectPosition="center"
+              className="absolute inset-0"
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password" className="dark:text-gray-400">
-              Senha
-            </Label>
-            <Input
-              id="password"
-              placeholder="Entre com sua senha"
-              required
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <div className="relative z-20 flex items-center text-lg font-medium">
+            <img alt="Logo" src="../../../images/logo.png" />
+            {/* DentApp */}
           </div>
-          <Button
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white"
-            type="submit"
-            onClick={handleSignIn}
-          >
-            Entrar
-          </Button>
-          <Button
-            className="w-full mt-4 text-white bg-green-500 hover:bg-green-400"
-            type="button"
-            onClick={redirectToRecoverPage}
-          >
-            Cadastre-se em nossa plataforma
-          </Button>
-          <Link
-            className="inline-block w-full text-sm text-center underline dark:text-gray-400"
-            href={"login/recover"}
-          >
-            Esqueceu sua senha?
-          </Link>
+        </div>
+        <div className="lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                Acessar Sistema
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Entre com seus dados abaixo para acessar o sistema
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="dark:text-gray-400">
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  placeholder="Entre com o seu email"
+                  required
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="dark:text-gray-400">
+                Senha
+              </Label>
+              <Input
+                id="password"
+                placeholder="Entre com sua senha"
+                required
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <Button
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+              type="submit"
+              onClick={handleSignIn}
+            >
+              Entrar
+            </Button>
+            <Button
+              className="w-full mt-4 text-white bg-green-500 hover:bg-green-400"
+              type="button"
+              onClick={redirectToRecoverPage}
+            >
+              Cadastre-se em nossa plataforma
+            </Button>
+            <Link
+              className="inline-block w-full text-sm text-center underline dark:text-gray-400"
+              href={"login/recover"}
+            >
+              Esqueceu sua senha?
+            </Link>
+          </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }

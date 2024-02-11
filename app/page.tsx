@@ -1,11 +1,9 @@
-import Image from "next/image";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import Navigation from "../components/navigationMenu";
-import DemoPage from "./patients/page";
 import React from "react";
 import { Sidebar } from "@/components/ui/sidebar";
+import LoginPage from "./login/page";
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -17,11 +15,9 @@ export default async function Home() {
 
   if (!user) {
     return (
-      <main className="flex flex-col items-center justify-between min-h-screen p-24">
-        <Link href={"/login"}>
-          You are not logged in. Click here to go login.
-        </Link>
-      </main>
+      <>
+        <LoginPage />
+      </>
     );
   }
 
