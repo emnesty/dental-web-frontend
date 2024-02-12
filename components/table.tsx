@@ -120,7 +120,8 @@ export default function Table() {
                           href="#"
                           className="text-indigo-600 hover:text-indigo-900"
                         >
-                          Editar<span className="sr-only">, {person.name}</span>
+                          Visualizar
+                          <span className="sr-only">, {person.name}</span>
                         </a>
                       </td>
                     </tr>
