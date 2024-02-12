@@ -224,8 +224,10 @@ export default function Sidebar() {
                     />
                     Sair
                   </a>
-                  {/* Modal de confirmação de logout */}
-                  <DialogLogout />
+                  <DialogLogout
+                    isOpen={isLogoutDialogOpen}
+                    setIsOpen={setIsLogoutDialogOpen}
+                  />
                 </li>
               </ul>
             </nav>

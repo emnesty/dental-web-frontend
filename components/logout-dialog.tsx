@@ -3,26 +3,29 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export default function DialogLogout() {
-  const [open, setOpen] = useState(true);
+interface DialogLogoutProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+export default function DialogLogout({ isOpen, setIsOpen }: DialogLogoutProps) {
   const supabase = createClientComponentClient();
-  const cancelButtonRef = useRef(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
   // Função que lida com o logout
   const handleLogout = async () => {
     await supabase.auth.signOut(); // Chama o método signOut do Supabase
-    // Por exemplo, redirecionar para a página de login:
     window.location.href = "/login";
-    setOpen(false); // Fecha o diálogo após o logout
+    setIsOpen(false); // Fecha o diálogo após o logout
   };
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={() => setIsOpen(false)}
       >
         <Transition.Child
           as={Fragment}
@@ -83,7 +86,7 @@ export default function DialogLogout() {
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setIsOpen(false)}
                     ref={cancelButtonRef}
                   >
                     Cancelar
