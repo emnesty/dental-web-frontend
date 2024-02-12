@@ -1,19 +1,23 @@
 "use client";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import {
   ArrowLeftEndOnRectangleIcon,
   Bars3Icon,
   CalendarIcon,
+  ClipboardDocumentCheckIcon,
   Cog6ToothIcon,
   FolderIcon,
   HomeIcon,
+  UserPlusIcon,
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import DialogLogout from "./logout-dialog";
 
 const navigation = [
   { name: "Início", href: "#", icon: HomeIcon, current: true },
@@ -34,6 +38,12 @@ function classNames(...classes: string[]) {
 export default function Sidebar() {
   const supabase = createClientComponentClient();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+
+  // Função para abrir o modal de logout
+  const handleLogoutClick = () => {
+    setIsLogoutDialogOpen(true);
+  };
 
   // Função para lidar com o logout
   const handleLogout = async () => {
@@ -202,7 +212,10 @@ export default function Sidebar() {
                 <li>
                   <a
                     href="#"
-                    onClick={handleLogout}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLogoutClick();
+                    }}
                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                   >
                     <ArrowLeftEndOnRectangleIcon
@@ -211,12 +224,13 @@ export default function Sidebar() {
                     />
                     Sair
                   </a>
+                  {/* Modal de confirmação de logout */}
+                  <DialogLogout />
                 </li>
               </ul>
             </nav>
           </div>
         </div>
-
         <div className="lg:pl-72">
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button
@@ -321,7 +335,38 @@ export default function Sidebar() {
           </div>
 
           <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">{/* Your content */}</div>
+            <div className="px-4 sm:px-6 lg:px-8">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Pacientes este mês
+                    </CardTitle>
+                    <UserPlusIcon className="h-6 w-6 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">5</div>
+                    <p className="text-xs text-muted-foreground">
+                      +10.1% desde o mês passado
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Exames solicitados este mês
+                    </CardTitle>
+                    <ClipboardDocumentCheckIcon className="h-6 w-6 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">30</div>
+                    <p className="text-xs text-muted-foreground">
+                      +20.1% desde o mês passado
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </main>
         </div>
       </div>
