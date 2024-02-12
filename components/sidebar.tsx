@@ -112,7 +112,7 @@ export default function Sidebar() {
                     <div className="flex h-16 shrink-0 items-center">
                       <img
                         className="h-8 w-auto"
-                        src="/images/_white.png"
+                        src="/images/logo_white.png"
                         alt="Dental Web"
                       />
                     </div>
