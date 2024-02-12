@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { useRouter } from "next/router";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   ArrowLeftEndOnRectangleIcon,
@@ -9,6 +8,7 @@ import {
   CalendarIcon,
   ClipboardDocumentCheckIcon,
   Cog6ToothIcon,
+  CreditCardIcon,
   FolderIcon,
   HomeIcon,
   UserPlusIcon,
@@ -18,9 +18,10 @@ import {
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import DialogLogout from "./logout-dialog";
+import Table from "./table"
 
 const navigation = [
-  { name: "Início", href: "#", icon: HomeIcon, current: true },
+  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
   { name: "Pacientes", href: "#", icon: UsersIcon, current: false },
   { name: "Consultas", href: "#", icon: CalendarIcon, current: false },
   { name: "Exames", href: "#", icon: FolderIcon, current: false },
@@ -338,13 +339,23 @@ export default function Sidebar() {
 
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <h1 className="mb-10 text-3xl font-bold leading-tight tracking-tight text-gray-900">
+                Dashboard
+              </h1>
+              <h3 className="text-base font-semibold leading-7 text-gray-900">
+                Informações do seu consultório
+              </h3>
+              <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                As informações presentes aqui sao um resumo do desempenho mensal
+                do seu consultório
+              </p>
+              <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Pacientes este mês
                     </CardTitle>
-                    <UserPlusIcon className="h-6 w-6 text-muted-foreground" />
+                    <UsersIcon className="h-6 w-6 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">5</div>
@@ -363,12 +374,42 @@ export default function Sidebar() {
                   <CardContent>
                     <div className="text-2xl font-bold">30</div>
                     <p className="text-xs text-muted-foreground">
-                      +20.1% desde o mês passado
+                      +20% desde o mês passado
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Pacientes cadastrados
+                    </CardTitle>
+                    <UserPlusIcon className="h-6 w-6 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">547</div>
+                    <p className="text-xs text-muted-foreground">
+                      +2% desde o mês passado
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Faturamento com consultas este mês
+                    </CardTitle>
+                    <CreditCardIcon className="h-6 w-6 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">R$ 1.578,00</div>
+                    <p className="text-xs text-muted-foreground">
+                      +5% desde o mês passado
                     </p>
                   </CardContent>
                 </Card>
               </div>
+              <Table />
             </div>
+            
           </main>
         </div>
       </div>
