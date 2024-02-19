@@ -16,6 +16,7 @@ import DialogLogout from "./logout-dialog";
 import DashboardMenu from "./dashboard-menu";
 import PacientesMenu from "./pacientes-menu";
 import ConsultasMenu from "./consultas-menu";
+import ExamesMenu from "./exames-menu";
 
 const navigation = [
   { name: "Dashboard", icon: HomeIcon },
@@ -44,12 +45,16 @@ export default function Sidebar() {
   const renderActiveMenu = () => {
     switch (activeMenu) {
       case "Dashboard":
-        return <ConsultasMenu />;
+        return <DashboardMenu />;
       case "Pacientes":
         return <PacientesMenu />;
       // Adicione casos para outros menus aqui
-      default:
+      case "Consultas":
         return <ConsultasMenu />;
+      case "Exames":
+        return <ExamesMenu />;
+      default:
+        return <DashboardMenu />;
     }
   };
 
@@ -250,6 +255,7 @@ export default function Sidebar() {
           </div>
         </div>
         {/* Content */}
+        {renderActiveMenu()}
       </div>
     </>
   );
