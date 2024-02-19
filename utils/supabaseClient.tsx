@@ -1,7 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = "https://jxyernjrvmmbpyovigjh.supabase.co";
-const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4eWVybmpydm1tYnB5b3ZpZ2poIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDUyNjkxNTYsImV4cCI6MjAyMDg0NTE1Nn0.9KtDtJB4_1g8mRbpS-QeAw1TIDDAJqtuYSi9yweDtVo";
+// Garanta que supabaseUrl e supabaseAnonKey sejam strings não vazias
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+// Verifique se as variáveis de ambiente foram definidas
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Supabase URL and Anon Key must be defined");
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

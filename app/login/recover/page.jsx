@@ -12,17 +12,9 @@ import { Icons } from "@/components/ui/icons";
 
 export default function RecoverPassword() {
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Garantir que esta linha esteja definida corretamente
+  const [isLoading, setIsLoading] = useState(false);
   const supabase = createClientComponentClient();
-  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-
-  const testToast = () => {
-    toast({
-      title: "Teste",
-      description: "Isto é um teste do Toast.",
-    });
-  };
 
   const handleRecoverPassword = async (event) => {
     event.preventDefault();

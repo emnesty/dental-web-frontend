@@ -15,6 +15,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Icons } from "@/components/ui/icons";
+import { ToastAction } from "@/components/ui/toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -23,6 +24,7 @@ export default function LoginPage() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState(""); // Novo estado para o nome completo
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
@@ -57,6 +59,7 @@ export default function LoginPage() {
       toast({
         title: "Erro",
         description: "As senhas não coincidem.",
+        variant: "destructive",
       });
       setIsLoading(false);
       return;
@@ -65,6 +68,8 @@ export default function LoginPage() {
       email,
       password,
       options: {
+        // Inclui o nome completo nos metadados do usuário
+        data: { fullName },
         emailRedirectTo: `${location.origin}/auth/callback`,
       },
     });
@@ -80,10 +85,7 @@ export default function LoginPage() {
         description:
           "Conta criada com sucesso! Verifique seu e-mail para confirmar a conta.",
       });
-      // Atualiza o estado do usuário
       setUser(data.user);
-
-      // Redirecionar para a página de login
       router.push("/login");
     }
     setIsLoading(false);
@@ -133,6 +135,20 @@ export default function LoginPage() {
               </p>
             </div>
             <div className="space-y-4">
+              {/* <div className="space-y-2">
+                <Label htmlFor="fullName" className="dark:text-gray-400">
+                  Nome Completo
+                </Label>
+                <Input
+                  id="fullName"
+                  placeholder="Seu nome completo"
+                  required
+                  type="text"
+                  value={fullName}
+                  disabled={isLoading}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </div> */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="dark:text-gray-400">
                   Email
