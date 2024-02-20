@@ -15,11 +15,14 @@ const ExamesMenu = () => {
 
   // Componente de esqueleto
   const Skeleton = () => (
-    <div className="animate-pulse">
-      <div className="h-8 bg-gray-300 rounded-md mb-4"></div>
-      <div className="h-4 bg-gray-300 rounded-md mb-2"></div>
-      <div className="h-4 bg-gray-300 rounded-md mb-2"></div>
-      <div className="h-4 bg-gray-300 rounded-md"></div>
+    <div className="py-10">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-200 rounded-md w-48 mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded-md max-w-[360px] mb-4"></div>
+          <div className="h-2 bg-gray-200 rounded-md mb-2.5"></div>
+        </div>
+      </div>
     </div>
   );
 
