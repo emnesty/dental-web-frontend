@@ -17,12 +17,14 @@ import DashboardMenu from "./dashboard-menu";
 import PacientesMenu from "./pacientes-menu";
 import ConsultasMenu from "./consultas-menu";
 import ExamesMenu from "./exames-menu";
+import SettingsMenu from "./settings-menu";
 
 const navigation = [
   { name: "Dashboard", icon: HomeIcon },
   { name: "Pacientes", icon: UsersIcon },
   { name: "Consultas", icon: CalendarIcon },
   { name: "Exames", icon: FolderIcon },
+  { name: "Configurações", icon: Cog6ToothIcon },
 ];
 
 function classNames(...classes: string[]) {
@@ -48,11 +50,12 @@ export default function Sidebar() {
         return <DashboardMenu />;
       case "Pacientes":
         return <PacientesMenu />;
-      // Adicione casos para outros menus aqui
       case "Consultas":
         return <ConsultasMenu />;
       case "Exames":
         return <ExamesMenu />;
+      case "Configurações":
+        return <SettingsMenu />;
       default:
         return <DashboardMenu />;
     }
@@ -197,38 +200,40 @@ export default function Sidebar() {
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                    {navigation.map((item) => (
-                      <li key={item.name}>
-                        <button
-                          onClick={() => handleMenuChange(item.name)}
-                          className={classNames(
-                            activeMenu === item.name
-                              ? "bg-gray-800 text-white w-full"
-                              : "text-gray-400 hover:text-white hover:bg-gray-800 w-full",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full"
-                          )}
-                        >
-                          <item.icon
-                            className="h-6 w-6 shrink-0"
-                            aria-hidden="true"
-                          />
-                          {item.name}
-                        </button>
-                      </li>
-                    ))}
+                    {navigation
+                      .filter((item) => item.name !== "Configurações")
+                      .map((item) => (
+                        <li key={item.name}>
+                          <button
+                            onClick={() => handleMenuChange(item.name)}
+                            className={classNames(
+                              activeMenu === item.name
+                                ? "bg-gray-800 text-white w-full"
+                                : "text-gray-400 hover:text-white hover:bg-gray-800 w-full",
+                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full"
+                            )}
+                          >
+                            <item.icon
+                              className="h-6 w-6 shrink-0"
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                          </button>
+                        </li>
+                      ))}
                   </ul>
                 </li>
                 <li className="mt-auto">
-                  <a
-                    href="#"
-                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                  <button
+                    onClick={() => handleMenuChange("Configurações")}
+                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white w-full"
                   >
                     <Cog6ToothIcon
                       className="h-6 w-6 shrink-0"
                       aria-hidden="true"
                     />
                     Configurações
-                  </a>
+                  </button>
                 </li>
                 <li>
                   <a

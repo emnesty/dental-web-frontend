@@ -1,7 +1,7 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 
-const PacientesMenu = () => {
+const SettingsMenu = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -15,10 +15,14 @@ const PacientesMenu = () => {
 
   // Componente de esqueleto
   const Skeleton = () => (
-    <div className="animate-pulse">
-      <div className="h-6 bg-gray-200 rounded-full  w-48 mb-4"></div>
-      <div className="h-4 bg-gray-200 rounded-full  max-w-[360px] mb-4"></div>
-      <div className="h-2 bg-gray-200 rounded-full  mb-2.5"></div>
+    <div className="py-10">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-200 rounded-md w-48 mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded-md max-w-[360px] mb-4"></div>
+          <div className="h-2 bg-gray-200 rounded-md mb-2.5"></div>
+        </div>
+      </div>
     </div>
   );
 
@@ -49,13 +53,13 @@ const PacientesMenu = () => {
             ) : (
               <>
                 <h1 className="mb-10 text-3xl font-bold leading-tight tracking-tight text-gray-900">
-                  Pacientes
+                  Configurações
                 </h1>
                 <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Informações sobre seus pacientes
+                  Suas configurações gerais
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                  Consulte dados e informações de contato sobre seus pacientes
+                  Realize ajustes nas configurações da sua conta
                 </p>
               </>
             )}
@@ -66,4 +70,4 @@ const PacientesMenu = () => {
   );
 };
 
-export default PacientesMenu;
+export default SettingsMenu;

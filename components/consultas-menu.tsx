@@ -3,6 +3,25 @@ import React, { useState } from "react";
 
 const ConsultasMenu = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simula o carregamento de dados
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Simula o carregamento dos dados por 2 segundos
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Componente de esqueleto
+  const Skeleton = () => (
+    <div className="animate-pulse">
+      <div className="h-6 bg-gray-200 rounded-full  w-48 mb-4"></div>
+      <div className="h-4 bg-gray-200 rounded-full  max-w-[360px] mb-4"></div>
+      <div className="h-2 bg-gray-200 rounded-full  mb-2.5"></div>
+    </div>
+  );
+
   return (
     <>
       <div className="lg:pl-72">
@@ -25,15 +44,21 @@ const ConsultasMenu = () => {
 
         <main className="py-10">
           <div className="px-4 sm:px-6 lg:px-8">
-            <h1 className="mb-10 text-3xl font-bold leading-tight tracking-tight text-gray-900">
-              Consultas
-            </h1>
-            <h3 className="text-base font-semibold leading-7 text-gray-900">
-              Informações sobre consultas
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-              Consulte dados e informações de contato sobre seus pacientes
-            </p>
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <>
+                <h1 className="mb-10 text-3xl font-bold leading-tight tracking-tight text-gray-900">
+                  Consultas
+                </h1>
+                <h3 className="text-base font-semibold leading-7 text-gray-900">
+                  Informações sobre consultas
+                </h3>
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                  Consulte dados e informações de contato sobre seus pacientes
+                </p>
+              </>
+            )}
           </div>
         </main>
       </div>
